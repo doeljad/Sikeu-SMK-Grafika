@@ -1,0 +1,73 @@
+<?php
+				if (isset($_POST['filter'])) {
+			  	$id_kelas=$_POST['id_kelas'];
+			  	$id_jurusan=$_POST['id_jurusan'];
+              $no = 1;
+			  $sql = $koneksi->query("SELECT tb_guru.nik_guru, tb_guru.id_guru, tb_guru.nama_guru, tb_guru.jabatan_guru, sum(tb_tagihan_bulanan_guru.jml_bayar) as jml_bayar_oke from tb_tagihan_bulanan_guru
+			  INNER JOIN tb_guru ON tb_tagihan_bulanan_guru.id_guru = tb_guru.id_guru
+			  WHERE tb_tagihan_bulanan_guru.id_jenis_bayar_guru='$id_jenis_bayar_guru'
+			  AND tb_tagihan_bulanan_guru.id_guru='$id_guru'
+			  GROUP BY tb_guru.id_guru");
+
+              while ($data= $sql->fetch_assoc()) {
+            ?>
+
+					<tr>
+						<td>
+							<?php echo $no++; ?>
+						</td>
+						<td>
+							<?php echo $data['nisn']; ?>
+						</td>
+						<td>
+							<?php echo $data['nama_siswa']; ?>
+						</td>
+						<td>
+							<?php echo $data['nama_kelas']; ?> - <?php echo $data['nama_jurusan']; ?>
+						</td>
+						<td>
+							<?php echo $data['jenis_kelamin']; ?>
+						</td>
+						<td>
+							<?php echo $data['telepon_siswa']; ?>
+						</td>
+						<td>
+							<?php echo $data['alamat_siswa']; ?>
+						</td>
+						
+						
+					</tr>
+
+					<?php
+              } } else{
+  			  $no = 1;
+				$sql = $koneksi->query("SELECT tb_guru.nik_guru, tb_guru.id_guru, tb_guru.nama_guru, tb_guru.jabatan_guru, sum(tb_tagihan_bulanan_guru.jml_bayar) as jml_bayar_oke from tb_tagihan_bulanan_guru
+				INNER JOIN tb_guru ON tb_tagihan_bulanan_guru.id_guru = tb_guru.id_guru
+				WHERE tb_tagihan_bulanan_guru.id_jenis_bayar_guru='$id_jenis_bayar_guru'
+				GROUP BY tb_guru.id_guru");
+				while ($data= $sql->fetch_assoc()) {
+            ?>
+
+					<tr>
+						<td>
+							<?php echo $no++; ?>
+						</td>
+						<td>
+							<?php echo $data['id_guru']; ?>
+						</td>
+						<td>
+							<?php echo $data['nik_guru']; ?>
+						</td>
+						
+						<td>
+							<?php echo $data['nama_guru'];?>
+						</td>
+						<td>
+							<?php echo $data['jml_bayar_oke'];?>
+						</td>
+						
+						
+
+						
+					</tr>
+              <?php }} ?>
